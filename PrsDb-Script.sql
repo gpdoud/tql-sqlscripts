@@ -1,6 +1,6 @@
 use master;
-drop table if exists PrsDb;
-create table PrsDb;
+drop database if exists PrsDb;
+create database PrsDb;
 go
 use PrsDb;
 -- create tables
