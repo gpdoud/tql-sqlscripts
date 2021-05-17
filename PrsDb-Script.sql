@@ -63,9 +63,12 @@ INSERT Vendors (Code, Name, Address, City, State, Zip) VALUES
     ('TARG', 'Target', '700 Target Dr', 'Minneapolic', 'MN', '63534'),
     ('KROG', 'Kroger', '100 Main St.', 'Cincinnati', 'OH', '45202');
 
+DECLARE @AmazonId int;
+SELECT @AmazonId = Id From Vendors where Code = 'AMAZ';
+
 INSERT Products (PartNbr, Name, Price, VendorId) VALUES
-    ('ECHO', 'Echo', 100, (SELECT Id from Vendors where Code = 'AMAZ')),
-    ('ECHODOT', 'Echo Dot', 40, (SELECT Id from Vendors where Code = 'AMAZ')),
+    ('ECHO', 'Echo', 100, @AmazonId),
+    ('ECHODOT', 'Echo Dot', 40, @AmazonId),
     ('ECHOSHOW5', 'Echo Show 5', 110, (SELECT Id from Vendors where Code = 'AMAZ')),
     ('ECHOSHOW8', 'Echo Show 8', 130, (SELECT Id from Vendors where Code = 'AMAZ')),
     ('FIRESTK', 'Fire Stick', 50, (SELECT Id from Vendors where Code = 'AMAZ')),
@@ -75,6 +78,6 @@ INSERT Requests (Description, Justification, UserId) VALUES
     ('1st Req', 'Test', (SELECT Id from Users where Username = 'su'))
 
 INSERT Requestlines (RequestId, ProductId, Quantity) VALUES
-    ((SELECT Id from Requests Where Description like '1st%'), (SELECT Id from Product Where PartNbr = 'ECHO'), 1),
-    ((SELECT Id from Requests Where Description like '1st%'), (SELECT Id from Product Where PartNbr = 'ECHODOT'), 1),
-    ((SELECT Id from Requests Where Description like '1st%'), (SELECT Id from Product Where PartNbr = 'FIRETV'), 1);
+    ((SELECT Id from Requests Where Description like '1st%'), (SELECT Id from Products Where PartNbr = 'ECHO'), 1),
+    ((SELECT Id from Requests Where Description like '1st%'), (SELECT Id from Products Where PartNbr = 'ECHODOT'), 1),
+    ((SELECT Id from Requests Where Description like '1st%'), (SELECT Id from Products Where PartNbr = 'FIRETV'), 1);
